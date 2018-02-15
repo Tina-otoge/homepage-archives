@@ -1,0 +1,171 @@
+html, body {
+  margin: 0;
+}
+
+body {
+  background-color: #ecf0f1;
+  font-family: sans-serif;
+  min-width: 1000px;
+  font-size: 1.5em;
+}
+
+body h1 {
+  font-size: 1.5em;
+}
+
+a, a:visited {
+  color: #e74c3c;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  text-decoration: underline;
+}
+
+main {
+  width: 90%;
+  margin: 25px auto 2em;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header, .box.red-shade {
+  box-shadow: -4px 0 0 #e74c3c, 4px 0 0 #e74c3c;
+}
+
+header {
+  height: 200px;
+  position: relative;
+  top: 50px;
+  font-family: 'Cuprum', sans-serif;
+  margin-bottom: 100px;
+}
+
+#header-container {
+  display: flex;
+  max-width: calc(1000px - 4em - 1em);
+  margin: auto;
+}
+
+#names {
+  margin-top: 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+
+#names>* {
+  display: block;
+  height: 40px;
+  margin: 0;
+}
+
+#names h1 {
+  font-size: 50px;
+  line-height: 0px;
+}
+
+#names h2 {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+#names h4 {
+  margin-right: -10px;
+}
+
+#avatar-container {
+  max-width: calc(1000px - 4em);
+  margin: auto;
+}
+
+#avatar-container>* {
+  flex: 1;
+}
+
+#avatar {
+  width: 300px;
+  position: relative;
+  top: -50px;
+  border-radius: 50%;
+  box-shadow: -4px -3px 0 2px #ffffff, 4px 3px 0 2px #ffffff, 0 0 15px rgba(0, 0, 0, .5);
+}
+
+#titles {
+  list-style: none;
+  padding-left: 0;
+  margin: 30px 0 0 36px;
+  font-size: 20px;
+  line-height: 0;
+}
+
+#titles>* {
+  position: relative;
+  height: 50px;
+}
+
+#titles li:nth-child(1) {
+  left: -40px;
+}
+
+#titles li:nth-child(2) {
+  left: -27px;
+}
+
+#titles li:nth-child(3) {
+  left: -25px;
+}
+
+#titles li:nth-child(4) {
+  left: -40px;
+}
+
+header, main .box {
+  background-color: rgba(255, 255, 255, .8);
+  border-radius: 4px;
+}
+
+main .box {
+  margin: 2em 0;
+  padding: 1em;
+}
+
+.box.blue-shade {
+  box-shadow: -4px 0 0 #3498db, 4px 0 0 #3498db;
+}
+
+.box.gray-shade {
+  box-shadow: -4px 0 0 #95a5a6, 4px 0 0 #95a5a6;
+}
+
+.box.pink-shade {
+  box-shadow: -4px 0 0 #f472d0, 4px 0 0 #f472d0;
+}
+
+blockquote>*:nth-child(1)::before {
+  content: '-- ';
+  color: #95a5a6;
+}
+
+blockquote .from {
+  text-align: right;
+}
+
+[title] {
+  cursor: help;
+}
+
+.row {
+  display: flex;
+}
+
+.row>* {
+  flex: 1;
+}
+
+.container .box {
+  margin: auto;
+  width: calc(95% - 2em);
+}
+
+#stuffs h1 {
+  text-align: center;
+}
