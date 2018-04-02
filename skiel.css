@@ -26,6 +26,10 @@ a:hover, a:active {
   width: 33%;
 }
 
+.strike {
+  text-decoration: line-through;
+}
+
 main {
   width: 90%;
   margin: 25px auto 2em;
