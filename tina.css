@@ -43,6 +43,12 @@ body {
 
 header {
 	top: 0;
+	z-index: 10;
+}
+
+header a, header a:visited {
+	color: white;
+	text-shadow: 0 0 2px orange;
 }
 
 header, footer {
@@ -64,7 +70,6 @@ header.fixed .title {
 }
 
 header.fixed, footer {
-	z-index: 2;
 	display: inline-block;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -178,11 +183,28 @@ main article .lettrine {
 }
 
 @media screen and (max-width: 900px) {
+	:root {
+		--offset-x-1: 5px;
+		--offset-x-2: -4px;
+		--offset-x-3: 4px;
+		--offset-x-4: -3px;
+		--offset-x-5: 3px;
+	}
+
+	header.fixed .title {
+		display: none;
+	}
+	header nav {
+		font-size: 12px;
+	}
+
 	#welcome {
 		width: 95%;
+		min-height: 650px;
 	}
 	#introduction {
 		font-size: 18px;
+		top: 2em;
 	}
 	#persona {
 		max-width: 50%;
