@@ -1,0 +1,498 @@
+<!doctype html>
+<html>
+<head>
+  <title>skiel.pro | Tina's homepage</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <style>
+    h1,h2,h3,h4,h5,h6{margin: 0;font-weight: 300}
+    a,a:visited{color:inherit;}
+    a:hover{color:rgb(59, 134, 160)}
+    body {
+      margin:0;padding:0;border:0;
+      background-color: #000;
+      color: #dedede;
+      font-family: 'Segoe UI';
+      min-width: 650px;
+      min-height: 650px;
+      overflow-y: hidden;
+    }
+    #cell_container, #me, #clickme {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);-webkit-transform:translate(-50%, -50%)}
+    #me, #clickme, .hoverme, #hi, #hi > div, .branch > * {transition: .573s;}
+    #me, .branch .fruit {background-size: contain;}
+    #me, #closeme, .fruit {cursor: pointer;}
+    #cell_container {
+      width: 650px;
+      height: 650px;
+      margin: auto;
+      /* DEBUGGING (delete this line to enable)
+      border: 2px yellow solid;
+      /* (yes I'm now I'm a genius, I even allow you to debug test my CSS) */
+    }
+    #hi {
+      background-color: rgba(42, 42, 42, .777);
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      position: absolute;
+      border-radius: 7px;
+      padding: 21px;
+      box-shadow: 0 0 24px 4px #424242;
+      opacity: 0;
+      overflow-y: auto;
+    }
+    #hi #closeme {
+      position: fixed;
+      bottom: -50px;
+      right: -10px;
+    }
+    #hi > div {
+      display: none;
+    }
+    #me, #clickme {
+      width: 300px;
+      height: 300px;
+      text-align: center;
+    }
+    #me {
+      border-radius: 50%;
+      background-image: url(me.jpg);
+      box-shadow: 0 0 4px 8px #dedede;
+      z-index: 2;
+    }
+    #me:hover {
+      opacity: .573;
+    }
+    #clickme {
+      margin-top: 130px;
+    }
+    .branch > * {
+      position: absolute;
+    }
+    .branch .arm {
+      background-color: #dedede;
+      height: 12px;
+      width: 25%;
+      box-shadow: 0 0 2px 1px #dedede;
+    }
+    .branch .fruit {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background-color: #dedede;
+      box-shadow: 0 0 3px 1px #dedede;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      color: rgb(159, 143, 168);
+    }
+    .branch#steam .arm {
+      top: 128px;
+      left: 380px;
+      transform: rotateZ(-55deg);
+      -webkit-transform: rotateZ(-55deg);
+      z-index: 1;
+    }
+    .branch#steam .fruit {
+      left: 470px;
+      top: 30px;
+      z-index: 2;
+    }
+    .branch#twitter .arm {
+      width: 160px;
+      left: 458px;
+      top: 242px;
+      transform: skewX(35deg);
+      -webkit-transform: skewX(35deg);
+    }
+    .branch#twitter .fruit {
+      left: 613px;
+      top: 208px;
+    }
+    .branch#preyoutube .arm {
+      width: 60px;
+      top: 225px;
+      left: 137px;
+      transform: rotateZ(30deg);
+      -webkit-transform: rotateZ(30deg);
+    }
+    .branch#youtube .arm {
+      width: 80px;
+      top: 211px;
+      left: 64px;
+    }
+    .branch#youtube .fruit {
+      top: 175px;
+      left: 5px;
+    }
+    .branch#blog .arm {
+      width: 70px;
+      top: 445px;
+      left: 408px;
+      transform: skewX(-50deg);
+      -webkit-transform: skewX(-50deg)
+    }
+    .branch#blog .fruit {
+      top: 410px;
+      left: 465px;
+    }
+    .branch#group .arm {
+      width: 68px;
+      top: 110px;
+      left: 400px;
+      transform: skewX(-35deg);
+      -webkit-transform: skewX(-35deg);
+    }
+    .branch#group .fruit {
+      top: 70px;
+      left: 330px;
+      font-size: 42px;
+    }
+    #bgm_controller {
+      position: absolute;
+      left: 1em;
+      bottom: -510px;
+      transition: 1s;
+    }
+    #bgm_controller.active {
+      bottom: 0;
+    }
+    #bgm_controller > * {
+      background-color: rgb(64,64,64);
+    }
+    #bgm_controller .fa, #bgm_soundcon, #bgm_progress {
+      cursor: pointer;
+    }
+    #bgm_trigger, #bgm_fast {
+      display: inline-block;
+      padding: 1em;
+      margin-left: 1em;
+      margin-bottom: -1px;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 0 4px 0 #fff;
+      vertical-align: bottom;
+    }
+    #bgm_fast {
+      font-size: 12px;
+      padding-right: .7em;
+    }
+    #bgm_fast > .fa {
+      margin-right: 6px;
+    }
+    #bgm_soundcon, #bgm_progress {
+      background-color: rgb(20,20,20);
+    }
+    #bgm_soundcon, #bgm_soundcon-in {
+      border-radius:4px;
+    }
+    #bgm_soundcon {
+      width: 50px;
+      height: 8px;
+      display: inline-block;
+      position: relative;
+    }
+    #bgm_soundcon span {
+      position: absolute;
+      top: -13px; left: 8px;
+      font-size: 10px;
+    }
+    #bgm_soundcon-in {
+      width: 10%;
+      height: 100%;
+      background-color: #fff;
+      box-shadow: 0 0 3px #fff;
+      position: absolute;
+      top: 0; left: 0;
+    }
+    #bgm_panel {
+      position: relative;
+      width: 300px;
+      height: 500px;
+      border-radius: 7px 7px 0 0;
+      z-index: 2;
+      box-shadow: 0 0 5px 2px #fff;
+      overflow-y: auto;
+      text-align: center;
+    }
+    #bgm_progress {
+      margin: 2em 1em;
+      height: 15px;
+    }
+    #bgm_progress-in {
+      height: 100%;
+      width: 0;
+      background-color: #fff;
+      box-shadow: 0 0 4px 1px #fff;
+      transition: .3s linear;
+    }
+    #bgm_list {
+      padding: 0;
+      font-size: 14px;
+    }
+    #bgm_list li {
+      list-style: none;
+      text-align: right;
+      padding: 0 1em;
+      cursor: pointer;
+    }
+    #bgm_list li.active {
+      background-color: #fff;
+      color: #000;
+    }
+    .hoverme, #clickme {
+      opacity: 0;
+    }
+    .hoverme:hover, #me:hover + #clickme {
+      opacity: 1;
+    }
+    @media screen and (max-height: 650px) {
+      #cell_container {top:0;transform:translateX(-50%);-webkit-transform:translateX(-50%)}
+    }
+    /* yes, color #dedede is obviously a reference to Kirby */
+    /* yes, animation time .573s is obviously a reference to KONAMI (573) */
+    /* now stop telling me "lol is that a reference in your code ?" on twitter */
+  </style>
+</head>
+<body>
+  <div id="cell_container">
+    <div id="hi">
+      <p id="closeme"><i class="fa fa-close"></i> close</p>
+      <div id="metext">
+        <h1>Hey I'm Tina !<br /><small>But don't get confused, I'm a boy.</small></h1>
+        <p>My aliases are : <i>skielred</i> / <i>SKiEL</i>, <i>Shookaite</i> (old, deprecated), <i>darkerkirb</i> (old, deprecated).</p>
+        <h3>I'm a developer !</h3>
+        <p>Even though I'm still a student, I started learning how to code since I was 12. Long story short, I was playing <b>Minecraft</b> and there was a mod for that game that allows you to script objects directly from the game. It got my attention and I started learning other languages.<br />I'm fluent in <b>web front-end languages</b> (HTML / CSS / JavaScript), but also in <b>the common web back-end languages</b> (PHP, MySQL, some Ruby and Python).<br />I did some C and Arduino at school but let's be honest, that doesn't count.</p>
+        <h3>I love rhythm !</h3>
+        <p>I'm totally fond of Japanese arcade action rhythm games. I'm quite open and curious but I mostly play BEMANIs and my main drugs are <b>beatmania IIDX</b> and <b>SOUND VOLTEX</b>. I love how it feels to play at an arcade center so I sometime pay a visit to <i>Arcade Street</i> in Paris. I happen to sometime play <b>BMS</b> at home or <b>pop'n music</b> at the arcade when I don't want to play IIDX or SDVX.<br />Oh and, <a href="http://osu.ppy.sh/u/4444805" target="_blank"><b>osu!</b></a> sucks. Don't play this.</p>
+      </div>
+      <div id="steamtext">
+        <h1>Steam</h1>
+        <p>I play some games on Steam, usually when I want to play something but I got enough rhythm games for the day.</p>
+        <p>For now I mostly play <i>Counter-Strike : Global Offensive</i> and sometimes <i>Rocket League</i>, I have a lot of games so I play some random stuffs from times to times.</p>
+        <p>I share my account with my brother, so if you see me playing some stupid stuff like <i>Civilization V</i>, it's probably not me.</p>
+        <p>Add me if you know me, I rarely accept friends request from people I don't know at all because it's often useless because we won't play together.</p>
+        <p><a href="https://steamcommunity.com/profiles/76561198050199695">Click here to go to my profile</a></p>
+      </div>
+      <div id="twittertext">
+        <h1>Twitter</h1>
+        <p>I used to spend too much time on the well-known social micro-blogging platform way too misused as a classic social network instead of a micro-blogging website, also known as <i>Twitter</i>.</p>
+        <p>I usually tweets random stuff about what I'm enjoying on the moment (rhythm games 90% of the time), tips and infos, programming stuffs, rarely IRL stuffs, my (irrelevant) opinions on the hyped stuff of the moment (usually to say it's shit), trying to meet IRL with online people living near me (fails 100% of the time) and arguing with stupid people who have fun playing <i>osu!</i> and <i><s>Undertale</s> Undermeme</i>.</p>
+        <p>There've been times I spent a lot of time being active on Twitter, but it became very rare. I still read the shit people say sometimes but I'm never &laquo;actively tweeting&raquo; now.</p>
+        <p><a href="https://twitter.com/skielred">You may or not want to click here to go to my Twitter</a>.</p>
+      </div>
+      <div id="youtubetext">
+        <h1>YouTube</h1>
+        <p>I had multiple experience on posting videos on the Internet, I played games, said things, produced stuffs, and deleted everything, again and again.</p>
+        <p>My latest YouTube channel is called &laquo;DJ SKIEL&raquo;, I'm not a DJ, but in the concept of <i>beatmania IIDX</i> every player is a DJ, and I created this channel to post rhythm games videos, and mainly <i>beatmania IIDX simulation</i> videos, so I decided to name the channel as my current nickname (skielred or SKiEL) and with a "DJ" as a prefix to make it IIDX-ish.</p>
+        <p>As I said, I mainly post <i>beatmania IIDX simulation</i> videos, but I may post footages of other rhythm games such as <i>Taiko no Tatsujin</i>. I also happen to post <i>Monster Hunter Frontier G</i> videos because I like this game a lot.</p>
+        <p><a href="https://www.youtube.com/channel/UCECiKrjTL60Go_o14iGUEOQ">If you want to spend some time, click there to go to my channel.</a></p>
+      </div>
+      <div id="blogtext">
+        <h1>Blogs</h1>
+        <p>Blogging is fun, it's a &laquo;new&raquo; form of media sharing that appeared thanks to the Internet. It's easy to post about anything you want to talk about and easily reach a public and get answers. I like blogging because I think I can express myself in a more mature way than some other medias.</p>
+        <p>I run two blogs, the first one is called <i>8bit Prince</i> (in reference to the song 8bit Princess from <i>beatmania IIDX</i>), it's supposed to be the blog where I mainly talk about my projects, but it's currently dead and I planned to code it again. The second is a <i>WordPress</i> blog where I write in French about rhythm games, my intend with this French blog is to help people to get into the world of rhythm games.</p>
+        <p>You can visit <i>8bit Prince</i> at <a style="cursor:not-allowed" href="#">blog.skiel.pro</a>.<br />And you can visit my <i>WordPress</i> blog at <a href="http://skielred.wordpress.com/">skielred.wordpress.com</a>.</p>
+      </div>
+      <div id="grouptext">
+        <h2>Gaming group</h2>
+        <p>I've created a gaming community group in August 2012 formerly known as &laquo;<i>EliozEX</i>&raquo;. The group's initial goal was to produce <i>Minecraft</i> videos on <i>YouTube</i>, which is what we done at first and I have to admit it was quite fun, we also met some other persons in the process and began to appreciate playing together.</p>
+        <p>Now, the group still exists and some former members still take part into the gaming sessions we hold, but the <i>Minecraft</i> videos thing is totally dead. We now mostly play <i>Counter-Strike : Global Offensive</i>, <i>Rocket League</i>, <i>League of Legends</i> (I personally don't), <i>Minecraft</i> from times to times and any multiplayer game that comes out to our mind that seems fun to us.</p>
+        <p>We're still having a lot of fun together and we keep regularly meeting on our vocal server, which you can join here : <a href="ts3server://skiel.pro">direct connection</a> <small>(you need <a href="https://www.teamspeak.com/downloads" target="_blank">TeamSpeak 3</a> to be installed to connect)</small></p>
+        <h2>Rhythm games association</h2>
+        <p>It's cool to enjoy playing rare rhythm games which only exist on arcade systems and that are very hard to get, but it makes it very hard to find people who share the same passion. And so I have founded in June 2016 an association for rhythm gamers in Paris and its suburbs called <a href="#" title="Woops, it's not finished yet." style="cursor:not-allowed">Make Some Noise</a>.</p>
+        <p>My intend is to gather together as much persons as possible who like rhythm games of any kind in Ile-De-France, to hold little events like gaming parties in bars/restaurants, to do discovering events to introduce rhythm games to new people at conventions, helping people to find where and how they can play the games, and maybe some more objectives are to come, the association is still very young so I may have not realized all the possibilities.</p>
+      </div>
+    </div>
+    <div id="me">
+    </div>
+    <p id="clickme">Click here to get infos about me !</p>
+    <div class="branch" id="steam">
+      <div class="arm"></div>
+      <div class="fruit" id="steamfruit"><i class="fa fa-steam" aria-hidden="true"></i></div>
+    </div>
+    <div class="branch" id="twitter">
+      <div class="arm"></div>
+      <div class="fruit" id="twitterfruit"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+    </div>
+    <div class="branch" id="preyoutube">
+      <div class="arm"></div>
+    </div>
+    <div class="branch" id="youtube">
+      <div class="arm"></div>
+      <div class="fruit" id="youtubefruit"><i class="fa fa-youtube" aria-hidden="true"></i></div>
+    </div>
+    <div class="branch" id="blog">
+      <div class="arm"></div>
+      <div class="fruit" id="blogfruit"><i class="fa fa-pencil" aria-hidden="true"></i></div>
+    </div>
+    <div class="branch" id="group">
+      <div class="arm"></div>
+      <div class="fruit" id="groupfruit"><i class="fa fa-users" aria-hidden="true"></i></div>
+    </div>
+  </div>
+  <div id="bgm_controller">
+    <div id="bgm_trigger" onclick="bgmTrigger()"><i class="fa fa-music"></i></div>
+    <div id="bgm_fast">
+      <i onclick="bgmPrev()" class="fa fa-step-backward"></i>
+      <i onclick="bgmPauseResume()" id="bgm_pauseresume" class="fa fa-pause"></i>
+      <i onclick="bgmNext()" class="fa fa-step-forward"></i>
+      <i onclick="bgmShuffle()" class="fa fa-random"></i>
+      <div id="bgm_soundcon"><span>volume</span><div id="bgm_soundcon-in"></div></div>
+    </div>
+    <div id="bgm_panel">
+      <div id="bgm_progress"><div id="bgm_progress-in"></div></div>
+      <h2><small>Current songs pack :</small><br />"kors k"</h2>
+      <ul id="bgm_list">
+      </ul>
+    </div>
+  </div>
+  <script>
+    document.getElementById('me').onclick = function() {
+      showDis('hi');
+      dispBlock('metext');
+    };
+    document.getElementById('steamfruit').onclick = function() {
+      showDis('hi');
+      dispBlock('steamtext');
+    }
+    document.getElementById('twitterfruit').onclick = function() {
+      showDis('hi');
+      dispBlock('twittertext');
+    }
+    document.getElementById('youtubefruit').onclick = function() {
+      showDis('hi');
+      dispBlock('youtubetext');
+    }
+    document.getElementById('blogfruit').onclick = function() {
+      showDis('hi');
+      dispBlock('blogtext');
+    }
+    document.getElementById('groupfruit').onclick = function() {
+      showDis('hi');
+      dispBlock('grouptext');
+    }
+    document.getElementById('closeme').onclick = function() {
+      hideDis('hi');
+      dispHide('metext');
+      dispHide('steamtext');
+      dispHide('twittertext');
+      dispHide('youtubetext');
+      dispHide('blogtext');
+      dispHide('grouptext');
+    };
+    function showDis(thing) {
+      document.getElementById(thing).style='opacity:1;z-index:9';
+    }
+    function hideDis(thing) {
+      document.getElementById(thing).style='opacity:0;z-index:-1';
+    }
+    function dispBlock(thing) {
+      document.getElementById(thing).style='display:block';
+    }
+    function dispHide(thing) {
+      document.getElementById(thing).style='display:none';
+    }
+    function bgmTrigger() {
+      var con = document.getElementById('bgm_controller');
+      if (con.className == 'active') {
+        con.className = '';
+      } else {
+        con.className='active';
+      }
+    }
+    function shuffle(array) {
+      var m = array.length, t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+      }
+      return array;
+    }
+    // bgm player
+    // bgm songs
+    var songs = [
+        // collection I : kors k
+        /* Remove closing comment to remove this collection */
+        ['kors k - Scat', 'bgm/scat.mp3'],
+        ['teranoid feat. MC Natsack - gigadelic', 'bgm/gigadelic.mp3'],
+        ['kors k - Say YEEEAHH', 'bgm/say.mp3'],
+        ['kors k - On My Wings (Hardstyle IIDX)', 'bgm/onmywings.mp3'],
+        ['kors k REASM Des-ROW - Erosion Mark', 'bgm/erosionmark.mp3'],
+        ['kors k - 8000000', 'bgm/8000000.mp3'],
+        ['kors k and MAYA - Xenna', 'bgm/xenna.mp3']
+        /* end of kors k */
+      ];
+    // var to know what track is currently being played
+    var track;
+    // bgm html list
+    var list = document.getElementById('bgm_list');
+    // bgm progress out
+    var pr = document.getElementById('bgm_progress'); // this var was called prout (for PRogress OUT) at first, but I after realized it was the word for "fart" in french, soooo
+    // bgm progress in
+    var prin = document.getElementById('bgm_progress-in');
+    // bgm sound out
+    var snd = document.getElementById('bgm_soundcon');
+    // bgm sound in
+    var sndin = document.getElementById('bgm_soundcon-in');
+    // bgm pause/resume button
+    var pauseResume = document.getElementById('bgm_pauseresume');
+    // bgm htmlinterface audio player element
+    var bgm = new Audio(songs[0][1]);
+    function bgmLoadList() {
+      list.innerHTML = '';
+      for (i=0;i<songs.length;i++) {
+        if (window.location.href+songs[i][1] == bgm.src) { list.innerHTML += '<li class="active" onclick="bgmPlay('+i+')">'+songs[i][0]+'</li>'; }
+        else { list.innerHTML += '<li onclick="bgmPlay('+i+')">'+songs[i][0]+'</li>'; }
+      }
+    }
+    function bgmNext() {
+      if (track == songs.length - 1) { bgmPlay(0); }
+      else { bgmPlay(track+1); }
+    }
+    function bgmPrev() {
+      if (track == 0) { bgmPlay(songs.length - 1); }
+      else { bgmPlay(track-1); }
+    }
+    function bgmPauseResume() {
+      if (bgm.paused) {
+        bgm.play();
+        pauseResume.className = 'fa fa-pause';
+      } else {
+        bgm.pause();
+        pauseResume.className = 'fa fa-play';
+      }
+    }
+    function bgmShuffle() {
+      songs = shuffle(songs);
+      bgmPlay(0);
+    }
+    function bgmPlay(thing) {
+      bgm.currentTime = 0;
+      bgm.src = songs[thing][1];
+      bgm.play();
+      track = thing;
+      pauseResume.className = 'fa fa-pause';
+      bgmLoadList();
+    }
+    // init bgm
+    bgm.volume = 0.1;
+    bgmPlay(0);
+    bgmPauseResume();
+    bgm.addEventListener('timeupdate', function() {
+      prin.style='width:'+(bgm.currentTime +.25)/bgm.duration*100+'%';
+      if (bgm.currentTime == bgm.duration) { bgmNext();}
+    });
+    pr.addEventListener('click', function(e) {
+      bgm.currentTime = Math.round(((e.offsetX / pr.offsetWidth) * bgm.duration)*1000000)/1000000;
+    })
+    snd.addEventListener('click',function(e) {
+      bgm.volume = e.offsetX / snd.offsetWidth;
+      sndin.style.width = (bgm.volume * 100) + '%';
+    })
+  </script>
+</body>
+</html>
